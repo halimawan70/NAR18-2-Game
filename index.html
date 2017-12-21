@@ -1,0 +1,108 @@
+<html>
+	
+	<head>
+		
+	</head>
+
+
+	<body>
+		
+		<canvas id="myCanvas" width="640px" height = "640px" style="border:2px solid black">
+			
+		</canvas>
+
+	</body>
+
+	<script type="text/javascript">
+		var map;
+		var stick = [new block(240,0), new block(320, 0), new block(400,0), new block(160, 0)];
+		var triangle = [new block(240,0), new block(240, 80), new block(320,80), new block(160, 80)];
+		var box = [new block(240,0), new block(240,80), new block(320,0), new block(320, 80)];
+		var lshape = [new block(320,0), new block(320,80), new block(240,80), new block(160,80)];
+		var revlshape = [new block(160,0), new block(320,80), new block(240,80), new block(160,80)];
+		var sshape = [new block(240, 0), new block(240,80), new block(320, 0), new block(160, 80)];
+		var revsshape = [new block(240, 0), new block(240,80), new block(320, 80), new block(160, 0)];
+		var blocks = [stick, triangle, box, lshape, revlshape, sshape, revsshape];
+		var EMPTY = 0;
+		var LOCKED = 1;
+		var CURRENT = 2;
+		//var gameStatus = RUNNING;
+		var timer = 0;
+		var size = 80;
+		var currentBlock;
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+		var rand;
+		var myGameLoop;
+
+		function initializeGame(){
+			map = new Array(8);
+			for(var i = 0; i < 8; i++){
+				map[i] = new Array(8);
+			}
+
+			for(var i = 0; i < 8; i++){
+				for(var j = 0; j < 8; j++){
+					map[i][j] = 0;
+				}
+			}
+
+			rand = Math.floor((Math.random() * 7));
+			currentBlock = new Array(blocks[rand][0], blocks[rand][1], blocks[rand][2], blocks[rand][3]);
+		}
+
+		function block(x, y){
+			this.x = x;
+			this.y = y;
+		}
+
+		function render(block){
+			ctx.fillRect(block.x, block.y, 80, 80);
+		}
+		
+		function clear(block){
+			ctx.clearRect(block.x, block.y, 80, 80);
+		}
+
+		function tick(){
+
+		}
+
+		function printFigure(item, index){
+			render(item);
+			map[item.x/80][item.y/80] = CURRENT;
+		}
+
+		function moveDown(item, index){
+			if(map[item.x/80][item.y/80] == CURRENT){
+				map[item.x/80][item.y/80] = EMPTY;				
+			}
+			clear(item);
+			item.y += 80;
+			render(item);
+			map[item.x/80][item.y/80] = CURRENT;
+		}
+		
+		function gameTick(){
+			//cek collision
+			//if collide maka instantiate
+			//else hapus posisi skrg
+			//turun dan tandai posisi skrg
+			currentBlock.forEach(moveDown);
+			currentBlock.forEach(printFigure);
+			
+		}
+
+		
+		//blocks[3].forEach(printFigure);
+
+
+		//do this
+		initializeGame();
+		//currentBlock.forEach(printFigure);
+		currentBlock.forEach(printFigure);
+		myGameLoop = setInterval(gameTick, 1000);
+
+
+	</script>
+</html>
