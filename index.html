@@ -5,13 +5,13 @@
 	</head>
 
 
-	<body>
-		
-		<canvas id="myCanvas" width="640px" height = "640px" style="border:2px solid black">
-			
+	<body selected id="body">		
+		<canvas id="myCanvas" width="640px" height = "640px" style="border:2px solid black">			
 		</canvas>
-
 	</body>
+
+	<script src="jquery-3.2.1.min.js">		
+	</script>
 
 	<script type="text/javascript">
 		var map;
@@ -26,6 +26,7 @@
 		var EMPTY = 0;
 		var LOCKED = 1;
 		var CURRENT = 2;
+		var MOVING = 3;
 		//var gameStatus = RUNNING;
 		var timer = 0;
 		var size = 80;
@@ -50,6 +51,7 @@
 
 			rand = Math.floor((Math.random() * 7));
 			currentBlock = new Array(blocks[rand][0], blocks[rand][1], blocks[rand][2], blocks[rand][3]);
+
 		}
 
 		function block(x, y){
@@ -65,10 +67,6 @@
 			ctx.clearRect(block.x, block.y, 80, 80);
 		}
 
-		function tick(){
-
-		}
-
 		function printFigure(item, index){
 			render(item);			
 		}
@@ -81,15 +79,18 @@
 			if(item.y == 560){
 				map[item.x/80][item.y/80] =  LOCKED;
 				mustLock = true;
+				console.log("Locked! touched the bottom of the game.");
 			}else if(map[item.x/80][(item.y+80)/80] ==  LOCKED){
 				map[item.x/80][item.y/80] =  LOCKED;
 				mustLock = true;	
+				console.log("Locked! touched another block");
 			}
 		}
 
 		function lockDown(item, index){
 			if(mustLock == true){
 				map[item.x/80][item.y/80] =  LOCKED;
+				console.log("locked!");
 			}
 		}
 
@@ -99,32 +100,78 @@
 			}			
 
 			if(map[item.x/80][item.y/80] == CURRENT){
-				map[item.x/80][item.y/80] = EMPTY;				
+				map[item.x/80][item.y/80] = EMPTY;		
+				clear(item);		
 			}
-			clear(item);
+			
 			item.y += 80;
 			render(item);
-			map[item.x/80][item.y/80] = CURRENT;
+			map[item.x/80][item.y/80] = MOVING;
+		}
+
+		function rightCollides(item, index){
+
+			if(item.x == 560){
+				return true;
+			}else if(map[(item.x+80)/80][item.y/80] ==  LOCKED){
+				return true;
+			}
+			return false;
+		}
+
+		function rightIsValid(){
+			for(var i = 0; i < currentBlock.length; i++){
+				if(currentBlock[i].x == 560){
+					return false;
+				}else if(map[(currentBlock[i].x+80)/80][currentBlock[i].y/80] == LOCKED){
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		function leftIsValid(){
+			for(var i = 0; i < currentBlock.length; i++){
+				if(currentBlock[i].x == 0){
+					return false;
+				}else if(map[(currentBlock[i].x-80)/80][currentBlock[i].y/80] == LOCKED){
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		function moveRight(item, index){
 			if(map[item.x/80][item.y/80] == CURRENT){
-				map[item.x/80][item.y/80] = EMPTY;				
-			}
-			clear(item);
+				map[item.x/80][item.y/80] = EMPTY;	
+				clear(item);			
+			}			
 			item.x += 80;
 			render(item);
-			map[item.x/80][item.y/80] = CURRENT;
+			map[item.x/80][item.y/80] = MOVING;
 		}
 
 		function moveLeft(item, index){
 			if(map[item.x/80][item.y/80] == CURRENT){
-				map[item.x/80][item.y/80] = EMPTY;				
+				map[item.x/80][item.y/80] = EMPTY;	
+				clear(item);			
 			}
-			clear(item);
+			
 			item.x -= 80;
 			render(item);
-			map[item.x/80][item.y/80] = CURRENT;
+			map[item.x/80][item.y/80] = MOVING;
+		}
+
+		function resetBlockState(item, index){
+			if(map[item.x/80][item.y/80] == MOVING){
+				map[item.x/80][item.y/80] = CURRENT;
+			}
+		}
+
+		function emptyArray(item, index){
+			delete currentBlock[index];
 		}
 		
 		function gameTick(){
@@ -137,20 +184,44 @@
 			if(mustLock == true){
 				mustLock = false;
 				rand = Math.floor((Math.random() * 7));
+				currentBlock = [];
+				currentBlock.length = 0;
+				currentBlock.forEach(emptyArray);
 				currentBlock = new Array(blocks[rand][0], blocks[rand][1], blocks[rand][2], blocks[rand][3]);
 				currentBlock.forEach(printFigure);
 				currentBlock.forEach(changeState);
-				return;
 			}			
 			currentBlock.forEach(moveDown);
+			currentBlock.forEach(resetBlockState);
 			currentBlock.forEach(printFigure);
 			currentBlock.forEach(changeState);			
+			console.log(currentBlock);
 		}
 		//do this
 		initializeGame();		
+
+		$("#body").keyup(function(e) {
+			    if (e.which !== 0) {
+			        if(e.key == "D" || e.key == "d"){
+			        	if(rightIsValid()){
+			        		currentBlock.forEach(moveRight);
+			        		currentBlock.forEach(resetBlockState);
+			        	}
+			        }else if(e.key == "A" || e.key == "a"){
+			        	if(leftIsValid()){
+			        		currentBlock.forEach(moveLeft);
+			        		currentBlock.forEach(resetBlockState);
+			        	}
+			        }
+			        //alert("Charcter was typed. It was: " + String.fromCharCode(e.which));
+    			}	
+    		}
+    	);
+
+
 		currentBlock.forEach(printFigure);
 		currentBlock.forEach(changeState);
-		myGameLoop = setInterval(gameTick, 500);
+		myGameLoop = setInterval(gameTick, 1000);
 
 	</script>
 </html>
