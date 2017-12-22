@@ -34,6 +34,7 @@
 		var ctx = c.getContext("2d");
 		var rand;
 		var myGameLoop;
+		var mustLock = false;
 
 		function initializeGame(){
 			map = new Array(8);
@@ -69,16 +70,59 @@
 		}
 
 		function printFigure(item, index){
-			render(item);
+			render(item);			
+		}
+
+		function changeState(item, index){
 			map[item.x/80][item.y/80] = CURRENT;
 		}
 
+		function checkIfAtBottom(item, index){
+			if(item.y == 560){
+				map[item.x/80][item.y/80] =  LOCKED;
+				mustLock = true;
+			}else if(map[item.x/80][(item.y+80)/80] ==  LOCKED){
+				map[item.x/80][item.y/80] =  LOCKED;
+				mustLock = true;	
+			}
+		}
+
+		function lockDown(item, index){
+			if(mustLock == true){
+				map[item.x/80][item.y/80] =  LOCKED;
+			}
+		}
+
 		function moveDown(item, index){
+			if(map[item.x/80][item.y/80] ==  LOCKED){
+				return;
+			}			
+
 			if(map[item.x/80][item.y/80] == CURRENT){
 				map[item.x/80][item.y/80] = EMPTY;				
 			}
 			clear(item);
 			item.y += 80;
+			render(item);
+			map[item.x/80][item.y/80] = CURRENT;
+		}
+
+		function moveRight(item, index){
+			if(map[item.x/80][item.y/80] == CURRENT){
+				map[item.x/80][item.y/80] = EMPTY;				
+			}
+			clear(item);
+			item.x += 80;
+			render(item);
+			map[item.x/80][item.y/80] = CURRENT;
+		}
+
+		function moveLeft(item, index){
+			if(map[item.x/80][item.y/80] == CURRENT){
+				map[item.x/80][item.y/80] = EMPTY;				
+			}
+			clear(item);
+			item.x -= 80;
 			render(item);
 			map[item.x/80][item.y/80] = CURRENT;
 		}
@@ -88,21 +132,25 @@
 			//if collide maka instantiate
 			//else hapus posisi skrg
 			//turun dan tandai posisi skrg
+			currentBlock.forEach(checkIfAtBottom);
+			currentBlock.forEach(lockDown);
+			if(mustLock == true){
+				mustLock = false;
+				rand = Math.floor((Math.random() * 7));
+				currentBlock = new Array(blocks[rand][0], blocks[rand][1], blocks[rand][2], blocks[rand][3]);
+				currentBlock.forEach(printFigure);
+				currentBlock.forEach(changeState);
+				return;
+			}			
 			currentBlock.forEach(moveDown);
 			currentBlock.forEach(printFigure);
-			
+			currentBlock.forEach(changeState);			
 		}
-
-		
-		//blocks[3].forEach(printFigure);
-
-
 		//do this
-		initializeGame();
-		//currentBlock.forEach(printFigure);
+		initializeGame();		
 		currentBlock.forEach(printFigure);
-		myGameLoop = setInterval(gameTick, 1000);
-
+		currentBlock.forEach(changeState);
+		myGameLoop = setInterval(gameTick, 500);
 
 	</script>
 </html>
