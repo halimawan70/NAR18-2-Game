@@ -1,28 +1,57 @@
-<html>
-	
-	<head>
-		
+<html>	
+	<head>		
 	</head>
-
-
 	<body selected id="body">		
 		<canvas id="myCanvas" width="640px" height = "640px" style="border:2px solid black">			
 		</canvas>
 	</body>
-
 	<script src="jquery-3.2.1.min.js">		
 	</script>
-
 	<script type="text/javascript">
 		var map;
-		var stick = [new block(240,0), new block(320, 0), new block(400,0), new block(160, 0)];
-		var triangle = [new block(240,0), new block(240, 80), new block(320,80), new block(160, 80)];
-		var box = [new block(240,0), new block(240,80), new block(320,0), new block(320, 80)];
-		var lshape = [new block(320,0), new block(320,80), new block(240,80), new block(160,80)];
-		var revlshape = [new block(160,0), new block(320,80), new block(240,80), new block(160,80)];
-		var sshape = [new block(240, 0), new block(240,80), new block(320, 0), new block(160, 80)];
-		var revsshape = [new block(240, 0), new block(240,80), new block(320, 80), new block(160, 0)];
-		var blocks = [stick, triangle, box, lshape, revlshape, sshape, revsshape];
+		function stick(){
+			this.one = new block(240,0);
+			this.two = new block(320, 0);
+			this.three = new block(400,0);
+			this.four = new block(160, 0);
+		} 
+		function triangle(){
+			this.one = new block(240,0);
+			this.two = new block(240, 80);
+			this.three = new block(320,80);
+			this.four = new block(160, 80);
+		}  
+		function box (){
+			this.one = new block(240,0);
+			this.two = new block(240,80);
+			this.three = new block(320,0);
+			this.four = new block(320, 80);
+		} 
+		function lshape(){
+			this.one = new block(320,0);
+			this.two = new block(320,80);
+			this.three = new block(240,80);
+			this.four = new block(160,80);
+		} 
+		function revlshape(){
+			this.one = new block(160,0);
+			this.two = new block(320,80);
+			this.three = new block(240,80);
+			this.four = new block(160,80);
+		} 
+		function sshape (){
+			this.one = new block(240, 0);
+			this.two = new block(240,80);
+			this.three = new block(320, 0);
+			this.four = new block(160, 80);
+		}
+		function revsshape(){
+			this.one = new block(240, 0);
+			this.two = new block(240,80);
+			this.three = new block(320, 80);
+			this.four = new block(160, 0);
+		}	
+		var GAMEOVER = false;
 		var EMPTY = 0;
 		var LOCKED = 1;
 		var CURRENT = 2;
@@ -37,28 +66,57 @@
 		var myGameLoop;
 		var mustLock = false;
 
+		function newBlock(){
+			rand = Math.floor((Math.random() * 7));
+			switch(rand){
+				case 1: 
+					currentBlock = new stick();
+				break;
+				case 2: 
+					currentBlock = new triangle();
+				break;
+				case 3: 
+					currentBlock = new box();
+				break;
+				case 4:
+					currentBlock = new lshape();
+				 break;
+				case 5: 
+					currentBlock = new revlshape();
+				break;
+				case 6: 
+					currentBlock = new sshape();
+				break;
+				case 0: 
+					currentBlock = new revsshape();
+				break;
+			}
+
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				if(map[item.x/80][item.y/80] ==  LOCKED){
+					GAMEOVER = true;
+					alert('Game Over!');
+					return;
+				}	
+			});
+		}
+
 		function initializeGame(){
 			map = new Array(8);
 			for(var i = 0; i < 8; i++){
 				map[i] = new Array(8);
 			}
-
 			for(var i = 0; i < 8; i++){
 				for(var j = 0; j < 8; j++){
 					map[i][j] = 0;
 				}
-			}
-
-			rand = Math.floor((Math.random() * 7));
-			currentBlock = new Array(blocks[rand][0], blocks[rand][1], blocks[rand][2], blocks[rand][3]);
-
+			}			
 		}
-
 		function block(x, y){
 			this.x = x;
 			this.y = y;
 		}
-
 		function render(block){
 			ctx.fillRect(block.x, block.y, 80, 80);
 		}
@@ -66,162 +124,177 @@
 		function clear(block){
 			ctx.clearRect(block.x, block.y, 80, 80);
 		}
-
-		function printFigure(item, index){
-			render(item);			
-		}
-
-		function changeState(item, index){
-			map[item.x/80][item.y/80] = CURRENT;
-		}
-
-		function checkIfAtBottom(item, index){
-			if(item.y == 560){
-				map[item.x/80][item.y/80] =  LOCKED;
-				mustLock = true;
-				console.log("Locked! touched the bottom of the game.");
-			}else if(map[item.x/80][(item.y+80)/80] ==  LOCKED){
-				map[item.x/80][item.y/80] =  LOCKED;
-				mustLock = true;	
-				console.log("Locked! touched another block");
-			}
-		}
-
-		function lockDown(item, index){
-			if(mustLock == true){
-				map[item.x/80][item.y/80] =  LOCKED;
-				console.log("locked!");
-			}
-		}
-
-		function moveDown(item, index){
-			if(map[item.x/80][item.y/80] ==  LOCKED){
+		function renderCurrentBlock(){
+			if(GAMEOVER){
 				return;
-			}			
-
-			if(map[item.x/80][item.y/80] == CURRENT){
-				map[item.x/80][item.y/80] = EMPTY;		
-				clear(item);		
 			}
-			
-			item.y += 80;
-			render(item);
-			map[item.x/80][item.y/80] = MOVING;
+			Object.keys(currentBlock).forEach(function(key){
+				render(currentBlock[key]);
+			});
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				map[item.x/80][item.y/80] = CURRENT;
+			});
 		}
 
-		function rightCollides(item, index){
+		function checkCurrentBlock(){
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				if(item.y == 560){
+					map[item.x/80][item.y/80] =  LOCKED;
+					mustLock = true;
+					console.log("Locked! touched the bottom of the game.");
+				}else if(map[item.x/80][(item.y+80)/80] ==  LOCKED){
+					map[item.x/80][item.y/80] =  LOCKED;
+					mustLock = true;	
+					console.log("Locked! touched another block");
+				}
+			});
 
-			if(item.x == 560){
-				return true;
-			}else if(map[(item.x+80)/80][item.y/80] ==  LOCKED){
-				return true;
-			}
-			return false;
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				if(mustLock == true){
+					map[item.x/80][item.y/80] =  LOCKED;
+					console.log("locked!");
+				}
+			});
+		}
+
+		function moveDown(){
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				if(map[item.x/80][item.y/80] ==  LOCKED){
+					return;
+				}			
+				if(map[item.x/80][item.y/80] == CURRENT){
+					map[item.x/80][item.y/80] = EMPTY;		
+					clear(item);		
+				}
+				
+				item.y += 80;
+				render(item);
+				map[item.x/80][item.y/80] = MOVING;
+			});
+
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				
+				if(map[item.x/80][item.y/80] == MOVING){
+					map[item.x/80][item.y/80] = CURRENT;
+				}
+
+			});
 		}
 
 		function rightIsValid(){
-			for(var i = 0; i < currentBlock.length; i++){
-				if(currentBlock[i].x == 560){
-					return false;
-				}else if(map[(currentBlock[i].x+80)/80][currentBlock[i].y/80] == LOCKED){
-					return false;
+			var valid = true;
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				
+				if(item.x == 560){
+					valid = false;
+				}else if(map[(item.x+80)/80][item.y/80] == LOCKED){
+					valid = false;
 				}
-			}
 
-			return true;
+			});
+
+			return valid;
 		}
 
 		function leftIsValid(){
-			for(var i = 0; i < currentBlock.length; i++){
-				if(currentBlock[i].x == 0){
-					return false;
-				}else if(map[(currentBlock[i].x-80)/80][currentBlock[i].y/80] == LOCKED){
-					return false;
+			var valid = true;
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				
+				if(item.x == 0){
+					valid = false;
+				}else if(map[(item.x-80)/80][item.y/80] == LOCKED){
+					valid = false;
 				}
-			}
 
-			return true;
+			});
+			return valid;
 		}
 
-		function moveRight(item, index){
-			if(map[item.x/80][item.y/80] == CURRENT){
-				map[item.x/80][item.y/80] = EMPTY;	
-				clear(item);			
-			}			
-			item.x += 80;
-			render(item);
-			map[item.x/80][item.y/80] = MOVING;
+		function moveRight(){
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				
+				if(map[item.x/80][item.y/80] == CURRENT){
+					map[item.x/80][item.y/80] = EMPTY;	
+					clear(item);			
+				}			
+				item.x += 80;
+				render(item);
+				map[item.x/80][item.y/80] = MOVING;
+
+			});
+
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				
+				if(map[item.x/80][item.y/80] == MOVING){
+					map[item.x/80][item.y/80] = CURRENT;
+				}
+
+			});
 		}
 
-		function moveLeft(item, index){
-			if(map[item.x/80][item.y/80] == CURRENT){
-				map[item.x/80][item.y/80] = EMPTY;	
-				clear(item);			
-			}
-			
-			item.x -= 80;
-			render(item);
-			map[item.x/80][item.y/80] = MOVING;
-		}
+		function moveLeft(){
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				
+				if(map[item.x/80][item.y/80] == CURRENT){
+					map[item.x/80][item.y/80] = EMPTY;	
+					clear(item);			
+				}
+				
+				item.x -= 80;
+				render(item);
+				map[item.x/80][item.y/80] = MOVING
+			});
+		
+			Object.keys(currentBlock).forEach(function(key){
+				var item = currentBlock[key];
+				
+				if(map[item.x/80][item.y/80] == MOVING){
+					map[item.x/80][item.y/80] = CURRENT;
+				}
 
-		function resetBlockState(item, index){
-			if(map[item.x/80][item.y/80] == MOVING){
-				map[item.x/80][item.y/80] = CURRENT;
-			}
-		}
-
-		function emptyArray(item, index){
-			delete currentBlock[index];
+			});
 		}
 		
 		function gameTick(){
-			//cek collision
-			//if collide maka instantiate
-			//else hapus posisi skrg
-			//turun dan tandai posisi skrg
-			currentBlock.forEach(checkIfAtBottom);
-			currentBlock.forEach(lockDown);
-			if(mustLock == true){
-				mustLock = false;
-				rand = Math.floor((Math.random() * 7));
-				currentBlock = [];
-				currentBlock.length = 0;
-				currentBlock.forEach(emptyArray);
-				currentBlock = new Array(blocks[rand][0], blocks[rand][1], blocks[rand][2], blocks[rand][3]);
-				currentBlock.forEach(printFigure);
-				currentBlock.forEach(changeState);
+			if(GAMEOVER == false){
+				checkCurrentBlock();
+				if(mustLock == true){
+					mustLock = false;
+					newBlock();
+					renderCurrentBlock();
+				}			
+				moveDown();
+				renderCurrentBlock();
 			}			
-			currentBlock.forEach(moveDown);
-			currentBlock.forEach(resetBlockState);
-			currentBlock.forEach(printFigure);
-			currentBlock.forEach(changeState);			
-			console.log(currentBlock);
 		}
 		//do this
 		initializeGame();		
-
 		$("#body").keyup(function(e) {
 			    if (e.which !== 0) {
 			        if(e.key == "D" || e.key == "d"){
 			        	if(rightIsValid()){
-			        		currentBlock.forEach(moveRight);
-			        		currentBlock.forEach(resetBlockState);
+			        		moveRight();
 			        	}
 			        }else if(e.key == "A" || e.key == "a"){
 			        	if(leftIsValid()){
-			        		currentBlock.forEach(moveLeft);
-			        		currentBlock.forEach(resetBlockState);
+			        		moveLeft();
 			        	}
 			        }
-			        //alert("Charcter was typed. It was: " + String.fromCharCode(e.which));
     			}	
     		}
     	);
-
-
-		currentBlock.forEach(printFigure);
-		currentBlock.forEach(changeState);
-		myGameLoop = setInterval(gameTick, 1000);
-
+    	newBlock();
+		renderCurrentBlock();
+		myGameLoop = setInterval(gameTick, 500);
 	</script>
 </html>
