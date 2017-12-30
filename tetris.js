@@ -2,8 +2,8 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var boardHeight = 640;
 var boardWidth = 640;
-var blockHeight = 40;
-var blockWidth = 40;
+var blockHeight = 64;
+var blockWidth = 64;
 var boardHeightBlocks = boardHeight/blockHeight;
 var boardWidthBlocks = boardWidth/blockWidth;
 var board = new Array(boardHeightBlocks);
@@ -345,7 +345,7 @@ function tick(){
 function popLine(){
     var limits = [];
     var pop = true;
-    for(var i = 0; i < boardHeightBlocks; i++){
+    for (var i = boardHeightBlocks-1; i >= 0; i--){
         pop = true;
         for(var j = 0; j< boardWidthBlocks; j++){
             if(board[i][j] != LOCKED){
