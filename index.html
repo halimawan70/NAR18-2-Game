@@ -1,302 +1,53 @@
-<html>	
+<html id ="html">	
 	<head>		
+		<link rel="stylesheet" type="text/css" href="app.css">
 	</head>
-	<body selected id="body">		
-		<canvas id="myCanvas" width="640px" height = "640px" style="border:2px solid black">			
-		</canvas>
+	<body selected id="body">	
+		<div class="box">
+			<div id="leftPanel">
+				<canvas id="myCanvas" width="640px" height="640px">
+				</canvas>
+			</div>
+			<div id="rightPanel">
+				<div id="title">
+					<h1>NAR 18-2</h1>
+				</div>
+				<div id="content">
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem nesciunt incidunt illo. Explicabo provident, expedita
+						optio debitis accusamus adipisci incidunt amet quibusdam est officia! Illum accusantium mollitia eius nulla amet.
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores sint mollitia quibusdam rem cumque qui blanditiis, laudantium
+						nisi ad voluptates quas magni doloribus explicabo incidunt officiis perspiciatis accusantium quos. Aspernatur.
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum maxime libero necessitatibus tempora nisi obcaecati earum
+						magnam, dolores repellendus voluptate, ea voluptatum modi quasi ullam. Sint quis quos rem corporis.
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum maxime libero necessitatibus tempora nisi obcaecati earum
+						magnam, dolores repellendus voluptate, ea voluptatum modi quasi ullam. Sint quis quos rem corporis.
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum maxime libero necessitatibus tempora nisi obcaecati earum
+						magnam, dolores repellendus voluptate, ea voluptatum modi quasi ullam. Sint quis quos rem corporis.
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum maxime libero necessitatibus tempora nisi obcaecati earum
+						magnam, dolores repellendus voluptate, ea voluptatum modi quasi ullam. Sint quis quos rem corporis.
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum maxime libero necessitatibus tempora nisi obcaecati earum
+						magnam, dolores repellendus voluptate, ea voluptatum modi quasi ullam. Sint quis quos rem corporis.
+					</p>
+				</div>				
+			</div>
+			<div class="clear"></div>
+		</div>			
 	</body>
 	<script src="jquery-3.2.1.min.js">		
 	</script>
 	<script src="tetris.js">
-	</script>
-	<!--script type="text/javascript">
-		var map;
-		function stick(){
-			this.one = new block(240,0);
-			this.two = new block(320, 0);
-			this.three = new block(400,0);
-			this.four = new block(160, 0);
-		} 
-		function triangle(){
-			this.one = new block(240,0);
-			this.two = new block(240, 80);
-			this.three = new block(320,80);
-			this.four = new block(160, 80);
-		}  
-		function box (){
-			this.one = new block(240,0);
-			this.two = new block(240,80);
-			this.three = new block(320,0);
-			this.four = new block(320, 80);
-		} 
-		function lshape(){
-			this.one = new block(320,0);
-			this.two = new block(320,80);
-			this.three = new block(240,80);
-			this.four = new block(160,80);
-		} 
-		function revlshape(){
-			this.one = new block(160,0);
-			this.two = new block(320,80);
-			this.three = new block(240,80);
-			this.four = new block(160,80);
-		} 
-		function sshape (){
-			this.one = new block(240, 0);
-			this.two = new block(240,80);
-			this.three = new block(320, 0);
-			this.four = new block(160, 80);
-		}
-		function revsshape(){
-			this.one = new block(240, 0);
-			this.two = new block(240,80);
-			this.three = new block(320, 80);
-			this.four = new block(160, 0);
-		}	
-		var GAMEOVER = false;
-		var EMPTY = 0;
-		var LOCKED = 1;
-		var CURRENT = 2;
-		var MOVING = 3;
-		//var gameStatus = RUNNING;
-		var timer = 0;
-		var size = 80;
-		var currentBlock;
-		var c = document.getElementById("myCanvas");
-		var ctx = c.getContext("2d");
-		var rand;
-		var myGameLoop;
-		var mustLock = false;
-
-		function newBlock(){
-			rand = Math.floor((Math.random() * 7));
-			switch(rand){
-				case 1: 
-					currentBlock = new stick();
-				break;
-				case 2: 
-					currentBlock = new triangle();
-				break;
-				case 3: 
-					currentBlock = new box();
-				break;
-				case 4:
-					currentBlock = new lshape();
-				 break;
-				case 5: 
-					currentBlock = new revlshape();
-				break;
-				case 6: 
-					currentBlock = new sshape();
-				break;
-				case 0: 
-					currentBlock = new revsshape();
-				break;
-			}
-
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				if(map[item.x/80][item.y/80] ==  LOCKED){
-					GAMEOVER = true;
-					alert('Game Over!');
-					return;
-				}	
-			});
-		}
-
-		function initializeGame(){
-			map = new Array(8);
-			for(var i = 0; i < 8; i++){
-				map[i] = new Array(8);
-			}
-			for(var i = 0; i < 8; i++){
-				for(var j = 0; j < 8; j++){
-					map[i][j] = 0;
-				}
-			}			
-		}
-		function block(x, y){
-			this.x = x;
-			this.y = y;
-		}
-		function render(block){
-			ctx.fillRect(block.x, block.y, 80, 80);
-		}
-		
-		function clear(block){
-			ctx.clearRect(block.x, block.y, 80, 80);
-		}
-		function renderCurrentBlock(){
-			if(GAMEOVER){
-				return;
-			}
-			Object.keys(currentBlock).forEach(function(key){
-				render(currentBlock[key]);
-			});
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				map[item.x/80][item.y/80] = CURRENT;
-			});
-		}
-
-		function checkCurrentBlock(){
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				if(item.y == 560){
-					map[item.x/80][item.y/80] =  LOCKED;
-					mustLock = true;
-					console.log("Locked! touched the bottom of the game.");
-				}else if(map[item.x/80][(item.y+80)/80] ==  LOCKED){
-					map[item.x/80][item.y/80] =  LOCKED;
-					mustLock = true;	
-					console.log("Locked! touched another block");
-				}
-			});
-
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				if(mustLock == true){
-					map[item.x/80][item.y/80] =  LOCKED;
-					console.log("locked!");
-				}
-			});
-		}
-
-		function moveDown(){
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				if(map[item.x/80][item.y/80] ==  LOCKED){
-					return;
-				}			
-				if(map[item.x/80][item.y/80] == CURRENT){
-					map[item.x/80][item.y/80] = EMPTY;		
-					clear(item);		
-				}
-				
-				item.y += 80;
-				render(item);
-				map[item.x/80][item.y/80] = MOVING;
-			});
-
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				
-				if(map[item.x/80][item.y/80] == MOVING){
-					map[item.x/80][item.y/80] = CURRENT;
-				}
-
-			});
-		}
-
-		function rightIsValid(){
-			var valid = true;
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				
-				if(item.x == 560){
-					valid = false;
-				}else if(map[(item.x+80)/80][item.y/80] == LOCKED){
-					valid = false;
-				}
-
-			});
-
-			return valid;
-		}
-
-		function leftIsValid(){
-			var valid = true;
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				
-				if(item.x == 0){
-					valid = false;
-				}else if(map[(item.x-80)/80][item.y/80] == LOCKED){
-					valid = false;
-				}
-
-			});
-			return valid;
-		}
-
-		function moveRight(){
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				
-				if(map[item.x/80][item.y/80] == CURRENT){
-					map[item.x/80][item.y/80] = EMPTY;	
-					clear(item);			
-				}			
-				item.x += 80;
-				render(item);
-				map[item.x/80][item.y/80] = MOVING;
-
-			});
-
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				
-				if(map[item.x/80][item.y/80] == MOVING){
-					map[item.x/80][item.y/80] = CURRENT;
-				}
-
-			});
-		}
-
-		function moveLeft(){
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				
-				if(map[item.x/80][item.y/80] == CURRENT){
-					map[item.x/80][item.y/80] = EMPTY;	
-					clear(item);			
-				}
-				
-				item.x -= 80;
-				render(item);
-				map[item.x/80][item.y/80] = MOVING
-			});
-		
-			Object.keys(currentBlock).forEach(function(key){
-				var item = currentBlock[key];
-				
-				if(map[item.x/80][item.y/80] == MOVING){
-					map[item.x/80][item.y/80] = CURRENT;
-				}
-
-			});
-		}
-		
-		function gameTick(){
-			if(GAMEOVER == false){
-				checkCurrentBlock();
-				if(mustLock == true){
-					mustLock = false;
-					newBlock();
-					renderCurrentBlock();
-				}			
-				moveDown();
-				renderCurrentBlock();
-			}			
-		}
-		//do this
-		initializeGame();		
-		$("#body").keyup(function(e) {
-			    if (e.which !== 0) {
-			        if(e.key == "D" || e.key == "d"){
-			        	if(rightIsValid()){
-			        		moveRight();
-			        	}
-			        }else if(e.key == "A" || e.key == "a"){
-			        	if(leftIsValid()){
-			        		moveLeft();
-			        	}
-			        }
-    			}	
-    		}
-    	);
-    	newBlock();
-		renderCurrentBlock();
-		myGameLoop = setInterval(gameTick, 500);
-	</script-->
+	</script>    
 </html>

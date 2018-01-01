@@ -139,6 +139,7 @@ function initialize(){
             board[i][j] = EMPTY;
         }
     }
+    ctx.fillStyle = "#105C8D";
 }
 
 function moveDown(){
