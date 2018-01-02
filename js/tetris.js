@@ -4,6 +4,7 @@ var boardHeight = 640;
 var boardWidth = 640;
 var blockHeight = 64;
 var blockWidth = 64;
+var blockBorderWidth = 2;
 var boardHeightBlocks = boardHeight/blockHeight;
 var boardWidthBlocks = boardWidth/blockWidth;
 var board = new Array(boardHeightBlocks);
@@ -106,28 +107,25 @@ function newBlock(){
     }
 }
 
-function render(){
-    /*var collides = false;
-
+function render() {
+    
     for (var i = 0; i < dimension; i++) {
         var currentY = i + currentBlockY;
-        for (var j = 0; j < dimension; j++) {           
+        for (var j = 0; j < dimension; j++) {
             var currentX = j + currentBlockX;
-            if(board[currentY][currentX] > 0 && currentBlock[i][j] > 0)
-                return true;
-        }
-    }
-
-    if(!collides){*/
-        for (var i = 0; i < dimension; i++) {
-            var currentY = i + currentBlockY;
-            for (var j = 0; j < dimension; j++) {
-                var currentX = j + currentBlockX;
-                if (currentBlock[i][j] > 0)
-                    ctx.fillRect(currentX * blockWidth, currentY * blockHeight, blockWidth, blockHeight);
+            if (currentBlock[i][j] > 0){
+                //fillBorder(currentX * blockWidth, currentY * blockHeight, blockWidth, blockHeight, blockBorderWidth);
+                ctx.fillStyle = "#105C8D";
+                ctx.fillRect(currentX * blockWidth, currentY * blockHeight, blockWidth, blockHeight);                
             }
         }
-    //}
+    }
+    
+}
+
+function fillBorder(xPos, yPos, width, height, thickness){
+    ctx.fillStyle = "#001A2A";
+    ctx.fillRect(xPos - (thickness), yPos - (thickness), width + (thickness * 2), height + (thickness * 2));
 }
 
 function initialize(){
@@ -139,7 +137,6 @@ function initialize(){
             board[i][j] = EMPTY;
         }
     }
-    ctx.fillStyle = "#105C8D";
 }
 
 function moveDown(){
@@ -327,18 +324,23 @@ function rotate(){
 
 $("#body").keyup(function (e) {
     if (e.which !== 0) {
-        if (e.key == "D" || e.key == "d") {
-           moveRight();
-        } else if (e.key == "A" || e.key == "a") {
+        if (e.which == 39) {
+            moveRight();
+        } else if (e.which == 37) {
             moveLeft();
-        } else if (e.key == "S" || e.key == "s"){
-            moveDown();
-        } else if(e.key == "W" || e.key == "w"){
+        } else if (e.which == 38) {            
             rotate();
         }
     }
-}
-);
+});
+
+$("#body").keydown(function(e){
+    if(e.which !== 0){
+        if (e.which == 40) {
+            moveDown();
+        }
+    }
+});
 
 function tick(){
     if(gameState == RUNNING){

@@ -1,3 +1,20 @@
+@font-face {
+    font-family: "Akashi";
+    src: url("../ttf/Akashi.ttf");
+}
+@font-face{
+    font-family: "Cantarell";
+    src: url("../ttf/Cantarell-Regular.ttf");
+}
+@font-face{
+    font-family: "Cantarell";
+    src: url("../ttf/Cantarell-Bold.ttf");
+    font-weight: bold;
+}
+@font-face{
+    font-family: "FjallaOne";
+    src: url("../ttf/FjallaOne-Regular.ttf");
+}
 #html{
     box-sizing: border-box;
     overflow: hidden;
@@ -5,7 +22,7 @@
     padding: 0;
 }
 #body{
-    background-color: #043B5F;
+    background-color:#0C1E4D;
     box-sizing: border-box;
     overflow: hidden;
     margin: 0;
@@ -13,7 +30,7 @@
 }
 
 #myCanvas{
-    border: 3px solid #001A2A;
+    border: 3px solid #367EB9;
     display: inline-block;
 }
 .box{
@@ -23,6 +40,7 @@
     padding: 0;
     box-sizing: border-box;
     overflow: auto;
+    text-align: center;
 }
 #leftPanel{
     padding: 5px;
@@ -36,6 +54,50 @@
     margin: 0;
     height: 100%;
     box-sizing: border-box;
+}
+
+#title{
+    text-align: center;
+    padding: 5px;
+    font-size: 30px;
+    font-family: 'Akashi', Arial, sans-serif;
+    color: rgb(172, 203, 228);
+    box-sizing: border-box;
+    height: auto;
+}
+
+#content{
+    text-align: center;
+    padding: 5px;
+    font-size: 25px;
+    box-sizing: border-box;
+    height: auto;
+    margin: 0 auto;
+    background-color: #2B4178;
+    display: inline-block;
+    width: 45%;
+    height: 75%;
+}
+#content-title{
+    font-family: 'FjallaOne', Arial, sans-serif;    
+    color: rgb(172, 203, 228);
+}
+#content-content{
+    text-align: left;
+    width: 85%;
+    height: 75%;
+    background-color: rgb(142, 200, 255); 
+    display: inline-block;
+}
+
+.content-text{
+    font-family: 'Cantarell', Arial, sans-serif;
+    font-size: 25px;
+    padding: 70px 10px;
+}
+.content-icon{
+    font-size: 75px;
+    text-align: center;
 }
 .clear{
     clear: both;
