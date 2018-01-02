@@ -294,10 +294,14 @@ function rotate(){
             var currentY = i + currentBlockY;
             for (var j = 0; j < dimension; j++) {
                 var currentX = j + currentBlockX;
-                if (board[currentY][currentX] == LOCKED && newCurrentBlock[i][j] > 0) {
+                if ((newCurrentBlock[i][j] > 0 ) && (board[currentY][currentX] == LOCKED ||
+                currentY > boardHeightBlocks-1 || currentX > boardWidthBlocks-1 || currentX < 0)) {
                     collided = true;
+                    break;
                 }
             }
+            if(collided)
+                break;
         }
 
         if(!collided){
