@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NAR 18-2</title>
+
+	<style type="text/css">
+		/*Font Color*/
+		@font-face {
+		    font-family: "Akashi";
+		    src: url("ttf/Akashi.ttf");
+		}
+		@font-face{
+		    font-family: "Cantarell";
+		    src: url("ttf/Cantarell-Regular.ttf");
+		}
+		@font-face{
+		    font-family: "Cantarell";
+		    src: url("ttf/Cantarell-Bold.ttf");
+		    font-weight: bold;
+		}
+		@font-face{
+		    font-family: "FjallaOne";
+		    src: url("ttf/FjallaOne-Regular.ttf");
+		}
+		
+		*{padding:0;margin: 0;}
+
+		#main{z-index:-1;width: 100vw;height: 100vh;position: fixed;}
+
+		.split{position: fixed;z-index: 99;width: 50vw;height:100vh;background-color: red;}
+
+		#myCanvas{margin: auto;}
+
+		.key{width: 50px;height: 50px;margin: 2px;}
+	
+		.wrap-content{padding: 10px;text-align: center;}
+
+		.wrap-side{width: 33vw;height: 100vh;}
+
+		.wrap-block{margin: auto;width: 200px;background-color: white; }
+
+		.font-sec{font-family: 'FjallaOne','Arial',sans-serif;}
+
+		.title-content{
+			margin: 20px 0;
+			font-size: 32px;
+			color: rgb(172, 203, 228);
+			font-family: 'FjallaOne', Arial, sans-serif; 
+		}
+
+		.main-content{
+			margin: 15px;
+			padding: 15px;
+		}
+
+		.disp-flex{display: flex;justify-content: middle;}
+		.disp-flex-center{display: flex;justify-content: center;}
+
+		.center{
+		  position: relative;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%, -50%);
+		}
+
+		.left,.right{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+		}
+
+		.left{left:0;}.right{right:0;}
+
+		.modal{
+			position: absolute;
+			z-index: 9;
+			background-color: black;
+			width: 100vw;
+			height: 100vh;
+			opacity: 0.9;
+		}
+
+		/*Color*/
+		.col-text{color: rgb(142, 200, 255);}
+		.col-sec-text{color: #2B4178;}
+
+		.back-main-color{background-color: #0C1E4D;}
+		.back-sec-color{background-color: #2B4178;}
+		.back-third-color{background-color: rgb(142, 200, 255);}
+		.back-fourth-color{background-color: #367eb9;}
+
+		/*Fontsize*/
+		.fz-38{font-size: 38px;}
+		.fz-80{font-size: 80px;}
+
+		/*Margin*/
+		.mb-20{margin-bottom: 20px;}
+		.mt-5{margin-top: 5px;}
+		.mt-10{margin-top: 10px;}
+		.mt-20{margin-top: 20px;}
+		.ms-30{margin: 0 30px;}
+
+		/*animation slide*/
+		.anim-rotate{
+			animation:rotate .8s;animation-iteration-count: 3;
+		}
+		.anim-slide{animation: myanim .8s forwards;}
+		.anim-left{animation: animLeft 2s forwards;}
+		.anim-right{animation: animRight 2s forwards;}
+		@keyframes animLeft {
+			0% {transform: translateX(0px);}
+
+			90% {display: none;}
+			100% {transform: translateX(-50vw);}
+		}	
+		@keyframes animRight{
+			0% {transform: translateX(0px);}
+			90% {display: none;}
+			100% {transform: translateX(50vw);}
+		}	
+		@keyframes rotate-360{
+			0% {transform: rotate(0deg);}
+			100% {transform: rotate(360deg);}
+		}	
+
+		/*Button*/
+		.btn-border,.btn-video{
+			border:2px solid #2B4178;
+			color:#2B4178;
+			cursor: pointer;
+			background-color: transparent;
+			border-radius: 10px;
+		}
+		.btn-border{padding: 30px 80px;}
+		.btn-video{padding: 15px 50px;font-size: 28px}
+
+		#video{text-align: center;}
+	</style>
+	<link rel="stylesheet" type="text/css" href="css/ionicons.css">
+</head>
+<body id="body" class="back-main-color">
+	<div id="open-start" class="modal">
+		<button id="start-game" class="btn-border font-sec fz-38 center">Start</button>
+	</div>
+	<div id="wrap-video" class="modal">
+		<div id="video" class="center">
+			<video src="" width="800"></video>
+			<br>
+			<button id="close" class="btn-video font-sec">Close</button>
+		</div>
+	</div>
+	<div id="open" class="disp-flex" style="">
+		<div id="left" class="split back-main-color">
+			<img src="Left Bluejack.png" class="right" width="300">
+		</div>
+		<div id="right" class="split back-main-color" style="right: 0;">
+			<img src="Right Bluejack.png" class="left" width="300">
+		</div>
+	</div>
+	<div id="main" class="disp-flex">
+		<div class="wrap-side" style="display: flex;flex-direction: column;">
+			<div class="mt-20"></div>
+			<div class="wrap-content back-sec-color ms-30">
+				<div class="title-content">
+					Registration	
+				</div>
+				<div class="main-content back-fourth-color col-text">
+					For rrekhdkf h
+				</div>
+			</div>
+			<div id="separator"></div>
+			<div class="wrap-content back-sec-color ms-30">
+				<div class="title-content">
+					How to play		
+				</div>
+				<div class="main-content back-fourth-color">
+					<i class="ion-ios-game-controller-b col-text fz-80"></i>
+					<div class="mb-20"></div>
+					<div class="wrap-key disp-flex-center back-fourth-color">	
+						<div class="key back-third-color">
+							<div class="mt-5"></div>
+							<i class="ion-arrow-up-c fz-38 col-sec-text"></i>
+						</div>
+					</div>
+					<div class="wrap-key disp-flex-center">
+						<div class="key back-third-color">
+							<div class="mt-5"></div>
+							<i class="ion-arrow-left-c fz-38 col-sec-text"></i>
+						</div>
+						<div class="key back-third-color">
+							<div class="mt-5"></div>
+							<i class="ion-arrow-down-c fz-38 col-sec-text"></i>
+						</div>
+						<div class="key back-third-color">
+							<div class="mt-5"></div>
+							<i class="ion-arrow-right-c fz-38 col-sec-text"></i>
+						</div>
+					</div>
+					<div class="mt-10"></div>
+				</div>
+			</div>
+		</div>
+		<div class="wrap-side">	
+			<canvas id="myCanvas" class="center back-third-color"></canvas>
+		</div>
+		<div class="wrap-side"> 
+			<div class="wrap-content center back-sec-color">
+				<div id="title-info" class="title-content">
+					Information 
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/tetris.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
