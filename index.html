@@ -6,95 +6,82 @@
 	<title>NAR 18-2</title>
 
 	<style type="text/css">
-		/*Font Color*/
-		@font-face {
-		    font-family: "Akashi";
-		    src: url("ttf/Akashi.ttf");
-		}
-		@font-face{
-		    font-family: "Cantarell";
-		    src: url("ttf/Cantarell-Regular.ttf");
-		}
-		@font-face{
-		    font-family: "Cantarell";
-		    src: url("ttf/Cantarell-Bold.ttf");
-		    font-weight: bold;
-		}
-		@font-face{
-		    font-family: "FjallaOne";
-		    src: url("ttf/FjallaOne-Regular.ttf");
-		}
-		
+
 		*{padding:0;margin: 0;}
-
+		@font-face { y: "Akashi"; src: url("ttf/Akashi.ttf"); }
+		@font-face{ font-family: "Cantarell"; src: url("ttf/Cantarell-Regular.ttf"); }
+		@font-face{ font-family: "Cantarell"; src: url("ttf/Cantarell-Bold.ttf"); font-weight: bold; }
+		@font-face{ font-family: "FjallaOne"; src: url("ttf/FjallaOne-Regular.ttf"); }
+		
 		#main{z-index:-1;width: 100vw;height: 100vh;position: fixed;}
-
 		.split{position: fixed;z-index: 99;width: 50vw;height:100vh;background-color: red;}
-
 		#myCanvas{margin: auto;}
-
+		#video{text-align: center;}
+		#nar-title{padding: 30px 20px;}
+		.wrap-content{padding: 10px;text-align: center;}
+		.wrap-side{width: 33vw;height: 100vh;text-align: center;}
+		.wrap-block{margin: auto;width: 200px;background-color: white; }
+		.modal{ position: absolute; z-index: 9; background-color: black; width: 100vw; height: 100vh; opacity: 0.9; }
 		.key{width: 50px;height: 50px;margin: 2px;}
 		.space{width: 200px;height:50px;margin: 2px;font-size: 22px;}
-	
-		.wrap-content{padding: 10px;text-align: center;}
-
-		.wrap-side{width: 33vw;height: 100vh;}
-
-		.wrap-block{margin: auto;width: 200px;background-color: white; }
-
-		.font-sec{font-family: 'FjallaOne','Arial',sans-serif;}
-
 		.title-content{
 			margin: 20px 0;
 			font-size: 32px;
 			color: rgb(172, 203, 228);
 			font-family: 'FjallaOne', Arial, sans-serif; 
 		}
+		.main-content{ margin: 15px; padding: 15px; }
 
-		.main-content{
-			margin: 15px;
-			padding: 15px;
-		}
 
+		/*Display Flex*/
 		.disp-flex{display: flex;justify-content: middle;}
 		.disp-flex-center{display: flex;justify-content: center;}
 
+
+		/*Position*/
 		.center{
 		  position: relative;
 		  top: 50%;
 		  left: 50%;
 		  transform: translate(-50%, -50%);
 		}
+		.left,.right{ position: absolute; top: 0; bottom: 0; margin: auto; }
+		.left{left:0;}
+		.right{right:0;}
 
-		.left,.right{
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			margin: auto;
+
+		/*Button*/
+		.btn-border,.btn-video{
+			border:2px solid #2B4178;
+			color:#2B4178;
+			cursor: pointer;
+			background-color: transparent;
+			border-radius: 10px;
 		}
+		.btn-border{padding: 30px 80px;}
+		.btn-video{padding: 15px 50px;font-size: 28px}
 
-		.left{left:0;}.right{right:0;}
-
-		.modal{
-			position: absolute;
-			z-index: 9;
-			background-color: black;
-			width: 100vw;
-			height: 100vh;
-			opacity: 0.9;
-		}
 
 		/*Color*/
 		.col-text{color: rgb(142, 200, 255);}
 		.col-sec-text{color: #2B4178;}
 
+
+		/*Background*/
 		.back-main-color{background-color: #0C1E4D;}
 		.back-sec-color{background-color: #2B4178;}
 		.back-third-color{background-color: rgb(142, 200, 255);}
 		.back-fourth-color{background-color: #367eb9;}
 
+
+		/*Font Style*/
+		.font-main{font-family: 'Akashi','Arial',sans-serif;}
+		.font-sec{font-family: 'FjallaOne','Arial',sans-serif;}
+
+
 		/*Fontsize*/
 		.fz-38{font-size: 38px;}
+		.fz-56{font-size: 56px;}
 		.fz-80{font-size: 80px;}
 
 		/*Margin*/
@@ -126,19 +113,7 @@
 			0% {transform: rotate(0deg);}
 			100% {transform: rotate(360deg);}
 		}	
-
-		/*Button*/
-		.btn-border,.btn-video{
-			border:2px solid #2B4178;
-			color:#2B4178;
-			cursor: pointer;
-			background-color: transparent;
-			border-radius: 10px;
-		}
-		.btn-border{padding: 30px 80px;}
-		.btn-video{padding: 15px 50px;font-size: 28px}
-
-		#video{text-align: center;}
+		
 	</style>
 	<link rel="stylesheet" type="text/css" href="css/ionicons.css">
 </head>
@@ -210,10 +185,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="wrap-side">	
+		<div class="wrap-side">	 
 			<canvas id="myCanvas" class="center back-third-color"></canvas>
 		</div>
 		<div class="wrap-side"> 
+			<div class="mt-20"></div>
+			<div id="nar-title" class="font-main fz-56 col-text"> NAR 18-2</div>
 			<div class="wrap-content center back-sec-color">
 				<div id="title-info" class="title-content">
 					Information 
