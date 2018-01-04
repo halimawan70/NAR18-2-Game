@@ -141,7 +141,14 @@ function fillBorder(xPos, yPos, width, height, thickness){
     ctx.fillRect(xPos - (thickness), yPos - (thickness), width + (thickness * 2), height + (thickness * 2));
 }
 
+function reBoard(){
+    ctx.beginPath();
+    ctx.clearRect(0,0,c.width,c.height);
+    ctx.closePath();
+}
+
 function initialize(){
+    reBoard();
     for (var i = 0; i < board.length; i++) {
         board[i] = new Array(boardWidthBlocks);
     }
@@ -346,7 +353,7 @@ function mostBottom(){
 }
 
 $(document).keydown(function(e){
-    if(e.which !== 0)
+    if(e.which !== 0 && gameState == RUNNING)
         if (e.which == 40) 
             moveDown();
         else if (e.which == 39)

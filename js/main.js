@@ -15,20 +15,49 @@ $(document).ready(function(){
 
 	function initHTML(){
 		$("#wrap-video").css("display","none");
+		slideLeftRight();
+	}
+
+	function disableMain(param){
+		if(param)
+			$("#main").attr("disabled","disabled");
+		else
+			$("#main").removeAttr("disabled");
+	}
+
+	function showButtonStart(){
+		disableMain(true);
+		reBoard();
+		var el = $("#open-start");
+		el.css({"opacity":"0","display":"block"});
+		el.animate({opacity:0.9},500);
+	}
+
+	function hideButtonStart(){
+		var el = $("#open-start");
+		el.css({"opacity":"0.9","display":"block"});
+		el.animate({opacity:0},500,function(){
+			el.css('display','none');
+			disableMain(false);
+		});
 	}
 
 	function showVideo(){
 		var el = $("#wrap-video");
 		el.css({"opacity":"0","display":"block"});
-		el.animate({opacity:1},500);
+		el.animate({opacity:0.9},500);
+		disableMain(true);
 	}
 
 	function hideVideo(){
+		showButtonStart();
 		var el = $("#wrap-video");
-		el.css({"opacity":"1","display":"block"});
-		el.animate({opacity:0},500,function(){
-			el.css("display","none");	
+		el.css({"opacity":"0.9","display":"block"});
+		el.animate({opacity:0},500,function(){ 
+			el.css("display","none"); 
+			disableMain(false);
 		});	
+
 	}
 
 	function showHideVideo(){
@@ -51,7 +80,7 @@ $(document).ready(function(){
 	}
 
 	function startGame(){
-		$('#start-game').animate({opacity:0},{
+		$('#open-start').animate({opacity:0},{
 			duration:500,
 			complete:function(){
 				gameState = RUNNING;
@@ -65,11 +94,13 @@ $(document).ready(function(){
 	}
 
 	//game started
-	$('#start-game').click(startGame);
+	function main(){
+		$('#start-game').click(startGame);
+		$("#close").click(showHideVideo);
 
-	$("#close").click(showHideVideo);
-
-	initHTML();
-    slideLeftRight();
+		initHTML();	
+	}
+	
+	main();
 
 });
