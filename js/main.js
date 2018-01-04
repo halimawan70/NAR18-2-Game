@@ -1,7 +1,6 @@
 $(document).ready(function(){
 	
 	function tick(){
-		console.log(gameState);
 	    if(gameState == GAMEOVER){
 	    	showHideVideo();
 	    	gameState=NOT_STARTED;

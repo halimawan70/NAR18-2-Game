@@ -360,7 +360,17 @@ $(document).keydown(function(e){
 
 function popLine(){
     var limits = [];
+    var tempIndx = -1;
     var pop = true;
+    for (var i = 0; i < 3; i++){
+        if(tempIndx != -1) break;
+        for(var j = 0; j< boardWidthBlocks; j++){
+            if(board[i][j] == LOCKED){
+                tempIndx = i;
+                break;
+            }
+        }
+    }
     for (var i = boardHeightBlocks-1; i >= 0; i--){
         pop = true;
         for(var j = 0; j< boardWidthBlocks; j++){
@@ -377,10 +387,10 @@ function popLine(){
             }
         }
     }
-
+    tempIndx = tempIndx < 0 ? 2 : tempIndx;
     while(limits.length != 0){        
         var limit = limits[limits.length - 1]; 
-        for(var i = limit; i > 0; i--){
+        for(var i = limit; i > tempIndx; i--){
             for(var j = 0; j < boardWidthBlocks; j++){
                 if(board[i-1][j] > 0){
                     ctx.fillRect(j * blockWidth, i * blockHeight, blockWidth, blockHeight);
@@ -392,6 +402,7 @@ function popLine(){
             }
         }
         limits.pop();
+
     }
 
 }
