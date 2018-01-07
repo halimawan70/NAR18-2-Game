@@ -3,118 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>NAR 18-2</title>
-
-	<style type="text/css">
-
-		*{padding:0;margin: 0;}
-		@font-face { y: "Akashi"; src: url("ttf/Akashi.ttf"); }
-		@font-face{ font-family: "Cantarell"; src: url("ttf/Cantarell-Regular.ttf"); }
-		@font-face{ font-family: "Cantarell"; src: url("ttf/Cantarell-Bold.ttf"); font-weight: bold; }
-		@font-face{ font-family: "FjallaOne"; src: url("ttf/FjallaOne-Regular.ttf"); }
-		
-		#main{z-index:-1;width: 100vw;height: 100vh;position: fixed;}
-		.split{position: fixed;z-index: 99;width: 50vw;height:100vh;background-color: red;}
-		#myCanvas{margin: auto;}
-		#video{text-align: center;}
-		#nar-title{padding: 30px 20px;}
-		.wrap-content{padding: 10px;text-align: center;}
-		.wrap-side{width: 33vw;height: 100vh;text-align: center;}
-		.wrap-block{margin: auto;width: 200px;background-color: white; }
-		.modal{ position: absolute; z-index: 9; background-color: black; width: 100vw; height: 100vh; opacity: 0.9; }
-		.key{width: 50px;height: 50px;margin: 2px;}
-		.space{width: 200px;height:50px;margin: 2px;font-size: 22px;}
-		.title-content{
-			margin: 20px 0;
-			font-size: 32px;
-			color: rgb(172, 203, 228);
-			font-family: 'FjallaOne', Arial, sans-serif; 
-		}
-		.main-content{ margin: 15px; padding: 15px; }
-
-
-		/*Display Flex*/
-		.disp-flex{display: flex;justify-content: middle;}
-		.disp-flex-center{display: flex;justify-content: center;}
-
-
-		/*Position*/
-		.center{
-		  position: relative;
-		  top: 50%;
-		  left: 50%;
-		  transform: translate(-50%, -50%);
-		}
-		.left,.right{ position: absolute; top: 0; bottom: 0; margin: auto; }
-		.left{left:0;}
-		.right{right:0;}
-
-
-		/*Button*/
-		.btn-border,.btn-video{
-			border:2px solid #2B4178;
-			color:#2B4178;
-			cursor: pointer;
-			background-color: transparent;
-			border-radius: 10px;
-		}
-		.btn-border{padding: 30px 80px;}
-		.btn-video{padding: 15px 50px;font-size: 28px}
-
-
-		/*Color*/
-		.col-text{color: rgb(142, 200, 255);}
-		.col-sec-text{color: #2B4178;}
-
-
-		/*Background*/
-		.back-main-color{background-color: #0C1E4D;}
-		.back-sec-color{background-color: #2B4178;}
-		.back-third-color{background-color: rgb(142, 200, 255);}
-		.back-fourth-color{background-color: #367eb9;}
-
-
-		/*Font Style*/
-		.font-main{font-family: 'Akashi','Arial',sans-serif;}
-		.font-sec{font-family: 'FjallaOne','Arial',sans-serif;}
-
-
-		/*Fontsize*/
-		.fz-38{font-size: 38px;}
-		.fz-56{font-size: 56px;}
-		.fz-80{font-size: 80px;}
-
-		/*Margin*/
-		.mb-20{margin-bottom: 20px;}
-		.mt-5{margin-top: 5px;}
-		.mt-10{margin-top: 10px;}
-		.mt-20{margin-top: 20px;}
-		.ms-30{margin: 0 30px;}
-
-		/*animation slide*/
-		.anim-rotate{
-			animation:rotate .8s;animation-iteration-count: 3;
-		}
-		.anim-slide{animation: myanim .8s forwards;}
-		.anim-left{animation: animLeft 2s forwards;}
-		.anim-right{animation: animRight 2s forwards;}
-		@keyframes animLeft {
-			0% {transform: translateX(0px);}
-
-			90% {display: none;}
-			100% {transform: translateX(-50vw);}
-		}	
-		@keyframes animRight{
-			0% {transform: translateX(0px);}
-			90% {display: none;}
-			100% {transform: translateX(50vw);}
-		}	
-		@keyframes rotate-360{
-			0% {transform: rotate(0deg);}
-			100% {transform: rotate(360deg);}
-		}	
-		
-	</style>
+	<title>New Assistant Recruitment 18-2</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css">	
 	<link rel="stylesheet" type="text/css" href="css/ionicons.css">
 </head>
 <body id="body" class="back-main-color">
@@ -188,12 +78,23 @@
 		<div class="wrap-side">	 
 			<canvas id="myCanvas" class="center back-third-color"></canvas>
 		</div>
-		<div class="wrap-side"> 
+		<div class="wrap-side" id="nar"> 
 			<div class="mt-20"></div>
-			<div id="nar-title" class="font-main fz-56 col-text"> NAR 18-2</div>
-			<div class="wrap-content center back-sec-color">
+			<div id="nar-title" class="font-main fz-38 col-text"> New Assistant Recruitment 18-2</div>
+			<div id="info" class="wrap-content back-sec-color">
 				<div id="title-info" class="title-content">
 					Information 
+				</div>
+				<div id="nar-content" class="back-fourth-color">
+					<div id="card-content">
+						<div id="front-card" class="front card col-text font-main fz-24">dsdas fadkjfh daf kladjhf d aadksjf h</div>
+						<div id="back-card" class="back card col-text font-main fz-24">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -202,5 +103,6 @@
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/tetris.js"></script>
 	<script src="js/main.js"></script>
+	<script src="js/slider.js"></script>
 </body>
 </html>

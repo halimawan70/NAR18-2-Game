@@ -395,18 +395,23 @@ function popLine(){
         }
     }
     tempIndx = tempIndx < 0 ? 2 : tempIndx;
+    var done = true;
     while(limits.length != 0){        
         var limit = limits[limits.length - 1]; 
         for(var i = limit; i > tempIndx; i--){
+            done = true;
             for(var j = 0; j < boardWidthBlocks; j++){
-                if(board[i-1][j] > 0){
+                if(board[i-1][j] == LOCKED){
                     ctx.fillRect(j * blockWidth, i * blockHeight, blockWidth, blockHeight);
+                    done = false;
                 }else{
                     ctx.clearRect(j * blockWidth, i * blockHeight, blockWidth, blockHeight);
                 }
                 board[i][j] = board[i-1][j];
                 console.log(board[i][j]);
             }
+            if(done)
+            break;
         }
         limits.pop();
 
@@ -421,6 +426,11 @@ for(var i = 0;i<layout.length;i++){
         layout[i].style.padding = "0 20px";
     }
 }
+
+var nar = document.getElementById("nar-title");
+var title = document.getElementById("title-info");
+var narInfo = document.getElementById("info");
+var narContent = document.getElementById("nar-content");
 var wrapSide = document.getElementsByClassName("wrap-side");
 var separator = document.getElementById("separator");
 var wrapSides = document.getElementsByClassName("wrap-content back-sec-color ms-30");
@@ -429,3 +439,6 @@ var count=0;
 
 for(var i=0;i<wrapSides.length;i++)count+=wrapSides[i].offsetHeight;
 if(wh-count >= 20)separator.style.height = (wh-count-50) + "px";
+
+narInfo.style.height = (window.innerHeight - nar.offsetHeight - 60) + "px";
+narContent.style.height = (narInfo.offsetHeight - title.offsetHeight) - 80 + "px";
