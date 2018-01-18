@@ -1,0 +1,31 @@
+*{margin:0;padding: 0;}
+button{border: 3px solid #0C1E4D;background-color:transparent;	outline: none;padding: 15px 40px;font-size: 28px;cursor: pointer;border-radius: 10px;color: #0C1E4D;}
+#container{width: 1300px;margin: 10px auto;}
+#midside,#leftside,#rightside{
+	height: 100%;
+	float: left;
+	margin: 0 15px;
+	overflow: hidden;
+}
+#leftside {width:380px;}
+#rightside{width:380px;}
+#midside{width:450px;}
+
+#wrap-register{overflow: hidden;}
+#wrap-controller{height: 250px;}
+#wrap-register .wrap-content-nar,#rightside .wrap-content-nar{text-align: center;}
+.wrap-content-nar .content-nar{text-align: left;overflow: hidden;}
+.wrap-content-nar .info-nar{font-size: 36px;padding: 10px;}
+
+/*Rightside*/
+#rightside .title{text-align: center;font-size: 42px;margin-bottom: 20px;}
+
+#wrap-controller{text-align: center;}
+#wrap-controller .title{padding: 10px 5px;padding-bottom:0;font-size: 32px;}
+#wrap-controller .content{margin: 10px;height: 180px;}
+#wrap-controller .wrap-control{display: flex;flex-direction: column;justify-content: center;padding: 5px;}
+#wrap-controller .control,#wrap-controller .wrap-space{display: inline-flex;justify-content: center;}
+#wrap-controller .control .key{width: 40px;height: 40px;background-color: rgb(142, 200, 255);margin: 1px;font-size: 30px;font-family: 'FjallaOne'}
+#wrap-controller .space{width: 200px;height: 40px;background-color: rgb(142, 200, 255);margin: 1px;font-size: 20px;font-family: 'FjallaOne'}
+.modal{width:100vw;height:100vh;position: fixed;opacity: .9;background-color: #2B4178;z-index: 99;top:0px;}
+.modal .center-middle{top:50%;left:50%;transform:translate(-50%,-50%);position: relative;}
