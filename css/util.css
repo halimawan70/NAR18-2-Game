@@ -1,0 +1,75 @@
+@font-face {
+    font-family: "Akashi";
+    src: url("../ttf/Akashi.ttf");
+}
+@font-face{
+    font-family: "Cantarell";
+    src: url("../ttf/Cantarell-Regular.ttf");
+}
+@font-face{
+    font-family: "Cantarell";
+    src: url("../ttf/Cantarell-Bold.ttf");
+    font-weight: bold;
+}
+@font-face{
+    font-family: "FjallaOne";
+    src: url("../ttf/FjallaOne-Regular.ttf");
+}
+
+a,input,button{outline:none;}
+a{color: rgb(142, 200, 255);text-decoration: none;}
+
+/*Background*/
+.back-main{background-color: #0C1E4D;}
+.back-sec{background-color: #2B4178;}
+.back-third{background-color: rgb(142, 200, 255);}
+.back-fourth{background-color: #367eb9;}
+
+/*Font Color*/
+.font-main-col{color: rgb(142, 200, 255);}
+.font-sec-col{color: #2B4178;}
+.font-third-col{color: #2B4178;}
+.font-fourth-col{color: #333333;}
+.font-fifth-col{color: #FFF;}
+
+/*Font*/
+.font-main{font-family: 'FjallaOne', Arial, sans-serif;}
+.font-nar{font-family: 'Akashi', Arial, sans-serif;}
+
+/*Display*/
+.disp-flex-center{display: flex;flex-wrap: center;}
+.disp-flex-middle{display: flex;flex-wrap: middle;}
+
+/*Margin*/
+.m2{margin: 2px;}
+.m4{margin: 4px;}
+.m6{margin: 6px;}
+.m8{margin: 8px;}
+.m10{margin: 10px;}
+.mt2{margin-top: 2px;}
+.mt4{margin-top: 4px;}
+.mt6{margin-top: 6px;}
+.mt8{margin-top: 8px;}
+.mt10{margin-top: 10px;}
+.mt20{margin-top: 20px;}
+
+/*Padding*/
+.p2{padding: 2px;}
+.p4{padding: 4px;}
+.p6{padding: 6px;}
+.p8{padding: 8px;}
+.p10{padding: 10px;}
+.pt2{padding-top: 2px;}
+.pt4{padding-top: 4px;}
+.pt6{padding-top: 6px;}
+.pt8{padding-top: 8px;}
+.pt10{padding-top: 10px;}
+	
+
+.border{border: 1px solid black;}	
+.clear{clear: both;}
+.relative-vertical-mid{
+    position: relative !important;
+    top:50%;
+    transform: translateY(-50%);
+}
